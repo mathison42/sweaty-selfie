@@ -21,6 +21,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   camera: ^0.2.6
   path_provider:
+  intl:
 
 dev_dependencies:
   flutter_test:

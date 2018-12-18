@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'camera.dart';
-import 'selfie.dart';
+import 'selfie_app.dart';
+import 'objects/selfie.dart';
 import 'package:camera/camera.dart';
+import 'package:intl/intl.dart';
 
 List<CameraDescription> cameras;
 
@@ -41,27 +43,45 @@ class Week {
   final List<Image> selfies;
 }
 
-List<String> pics = [
-    "images/lake.0.jpg",
-  ];
+List<Selfie> pics = [
+  new Selfie(owner: "Rando", timestamp: new DateTime.now(), path: "images/lake.0.jpg"),
+];
 
-List<Container> _buildGridTileList(BuildContext context) {
+class _GridTitleText extends StatelessWidget {
+  const _GridTitleText(this.text);
 
-  return List<Container>.generate(
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      alignment: Alignment.centerLeft,
+      child: Text(text),
+    );
+  }
+}
+
+List<GridTile> _buildGridTileList(BuildContext context) {
+
+  return List<GridTile>.generate(
       pics.length,
       (int index) =>
-            Container (
+            GridTile (
+              footer: GridTileBar(
+                backgroundColor: Colors.black45,
+                title: _GridTitleText(pics[index].owner),
+                subtitle: _GridTitleText(new DateFormat.yMd().add_jm().format(pics[index].timestamp)),
+              ),
               child: GestureDetector (
                 onDoubleTap: () {
                   print("Tapped!!!!");
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SelfieApp(pics[index])),
+                    MaterialPageRoute(builder: (context) => SelfieApp(pics[index].path)),
                   );
                 },
-                child: Container(
-                  child: Image.asset(pics[index]),
-                ),
+                child: Image.asset(pics[index].path)
               )
             )
   );
@@ -86,9 +106,9 @@ class _MyTile extends StatelessWidget {
   final int week;
   final String description;
 
-  showSelfies(bool opened) {
+  showSelfies(bool opened, int week) {
     if (opened) {
-      print('Week$week Open');
+      print('Grabing selfies from week $week...');
     } else {
       print('Week $week Closed');
     }
@@ -96,16 +116,6 @@ class _MyTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return ListTile(
-    //   title: Text('$title',
-    //       style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
-    //   subtitle: Text('Week $week'),
-    //   leading: Icon(
-    //     Icons.cake,
-    //     color: Colors.red[500],
-    //   ),
-    //   onTap: showSelfies()
-    // );
     return ExpansionTile(
       leading: Icon(
         Icons.cake,
@@ -114,7 +124,7 @@ class _MyTile extends StatelessWidget {
       title: Text("Week $week - $title\n$description"),
       children: <Widget>[buildGrid(context)],
       onExpansionChanged: (bool opened) {
-        showSelfies(opened);
+        showSelfies(opened, week);
       },
     );
   }
@@ -126,7 +136,6 @@ class _MyHomePageState extends State<MyHomePage> {
     new Week(title: "Running Long", description: "Day 1) 7 Miles\nDay 2) 15 Miles", num: 2),
 
   ];
-  int _counter = 2;
 
   ListView lv = ListView(children:  <Widget>[],);
 
@@ -144,7 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void addPicture(String picPath) {
     setState(() {
-      pics.add(picPath);
+      pics.add(new Selfie(owner: "Falcore", timestamp: new DateTime.now(), path: picPath));
       lv = new ListView.builder(itemCount: weeks.length, itemBuilder:(BuildContext ctxt, int index) {
         return _MyTile(
           title: weeks[weeks.length-index-1].title,
@@ -154,17 +163,6 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     });
   }
-
-  // void _incrementCounter() {
-  //   setState(() {
-  //     _counter++;
-  //     weeks.add(new Week(title: "Running Medium", description: "Day 1) 3 Miles - Day 2) 2 Miles", num: _counter));
-  //     lv = new ListView.builder(itemCount: weeks.length, itemBuilder:(BuildContext ctxt, int index) {
-  //       return _MyTile(title: weeks[weeks.length-index-1].title, week : weeks[weeks.length-index-1].num);
-  //     });
-  //     print("Count: " + weeks.length.toString());
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {

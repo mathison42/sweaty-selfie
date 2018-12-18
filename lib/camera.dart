@@ -1,9 +1,9 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter/services.dart';
 
 class CameraApp extends StatefulWidget {
   List<CameraDescription> cameras;
@@ -45,6 +45,12 @@ class _CameraAppState extends State<CameraApp> {
   @override
   void dispose() {
     controller?.dispose();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     super.dispose();
   }
 
@@ -79,6 +85,10 @@ class _CameraAppState extends State<CameraApp> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     if (!controller.value.isInitialized) {
       return Container();
     }
