@@ -68,13 +68,16 @@ List<Container> _buildGridTileList(BuildContext context) {
 }
 
 Widget buildGrid(BuildContext context) {
-  return GridView.extent(
-      shrinkWrap: true,
-      maxCrossAxisExtent: 150.0,
-      padding: const EdgeInsets.all(4.0),
-      mainAxisSpacing: 4.0,
-      crossAxisSpacing: 4.0,
-      children: _buildGridTileList(context));
+  final Orientation orientation = MediaQuery.of(context).orientation;
+  return GridView.count(
+    shrinkWrap: true,
+    physics: const ScrollPhysics(),
+    crossAxisCount: (orientation == Orientation.portrait) ? 2 : 3,
+    mainAxisSpacing: 4.0,
+    crossAxisSpacing: 4.0,
+    padding: const EdgeInsets.all(4.0),
+    childAspectRatio: (orientation == Orientation.portrait) ? 1.0 : 1.3,
+    children: _buildGridTileList(context));
 }
 
 class _MyTile extends StatelessWidget {
