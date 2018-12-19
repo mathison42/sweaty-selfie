@@ -64,7 +64,11 @@ class WeekTile extends StatelessWidget {
   final int week;
   final String description;
 
-  WeekTile({this.title, this.week, this.description}) : super(key: ObjectKey(title));
+  WeekTile({
+    this.title,
+    this.week,
+    this.description
+  }) : super(key: ObjectKey(title));
 
   showSelfies(bool opened, int week) {
     if (opened) {
@@ -81,8 +85,13 @@ class WeekTile extends StatelessWidget {
         Icons.cake,
         color: Colors.red[500],
       ), 
-      title: Text("Week $week - $title\n$description"),
-      children: <Widget>[buildSelfieGrid(context)],
+      title: Text("Week $week - $title"),
+      children: <Widget>[
+        Container(
+          child: Text(description)
+        ),
+        buildSelfieGrid(context)
+        ],
       onExpansionChanged: (bool opened) {
         showSelfies(opened, week);
       },

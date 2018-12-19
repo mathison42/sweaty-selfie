@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Week {
   final String title;
-  final String description;
+  final List<String> description;
   final int num;
   final List<Image> selfies;
 

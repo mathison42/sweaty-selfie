@@ -37,8 +37,28 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Week> weeks = <Week>[
-    new Week(title: "Running Short", description: "Day 1) 3 Miles\nDay 2) 2 Miles", num: 1),
-    new Week(title: "Running Long", description: "Day 1) 7 Miles\nDay 2) 15 Miles", num: 2),
+    new Week(
+      title: "Running Short",
+      description: [
+        '''1) Square Agility: 2 reps right, 2 reps left; 1 min rests
+2) Square Diagonal: 3 reps right, 3 reps left 30sec - 30 sec rests
+3) Sprints @ 80%:
+  2x300m   4 min rests
+  2x200m   2 min rests
+  2x100m   1 min rests''',
+      "3 miles",
+      '''Square Agility: 2 reps right, 2 reps left; 1 min rests
+Square Diagonal  3 reps right, 3 reps left 30 sec rests
+Shuttles: sprint 15 yds down and back, sprint 20 yds down and back, rest. Thats 1 rep. Complete 5 reps with 1.5 min rest'''
+      ],
+      num: 1),
+    new Week(
+      title: "Running Long",
+      description: [
+        "Day 1) 7 Miles\nDay 2) 15 Miles"
+        ],
+      num: 2
+    ),
 
   ];
 
@@ -51,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
         return WeekTile(
           title: weeks[weeks.length-index-1].title,
           week : weeks[weeks.length-index-1].num,
-          description : weeks[weeks.length-index-1].description,
+          description : weeks[weeks.length-index-1].description[0],
           );
     });
   }
@@ -63,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
         return WeekTile(
           title: weeks[weeks.length-index-1].title,
           week : weeks[weeks.length-index-1].num,
-          description : weeks[weeks.length-index-1].description,
+          description : weeks[weeks.length-index-1].description[0],
           );
       });
     });
