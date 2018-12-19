@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class SelfieApp extends StatefulWidget {
   String path;
+
   SelfieApp(this.path);
 
   @override
