@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     lv = new ListView.builder(itemCount: weeks.length, itemBuilder:(BuildContext ctxt, int index) {
-        return MyTile(
+        return WeekTile(
           title: weeks[weeks.length-index-1].title,
           week : weeks[weeks.length-index-1].num,
           description : weeks[weeks.length-index-1].description,
@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       pics.add(new Selfie(owner: "Falcore", timestamp: new DateTime.now(), path: picPath));
       lv = new ListView.builder(itemCount: weeks.length, itemBuilder:(BuildContext ctxt, int index) {
-        return MyTile(
+        return WeekTile(
           title: weeks[weeks.length-index-1].title,
           week : weeks[weeks.length-index-1].num,
           description : weeks[weeks.length-index-1].description,

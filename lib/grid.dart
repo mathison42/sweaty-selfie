@@ -22,7 +22,7 @@ class _GridTitleText extends StatelessWidget {
   }
 }
 
-List<GridTile> _buildGridTileList(BuildContext context) {
+List<GridTile> _buildSelfieGridTileList(BuildContext context) {
   return List<GridTile>.generate(
       pics.length,
       (int index) =>
@@ -46,7 +46,7 @@ List<GridTile> _buildGridTileList(BuildContext context) {
   );
 }
 
-Widget buildGrid(BuildContext context) {
+Widget buildSelfieGrid(BuildContext context) {
   final Orientation orientation = MediaQuery.of(context).orientation;
   return GridView.count(
     shrinkWrap: true,
@@ -56,15 +56,15 @@ Widget buildGrid(BuildContext context) {
     crossAxisSpacing: 4.0,
     padding: const EdgeInsets.all(4.0),
     childAspectRatio: (orientation == Orientation.portrait) ? 1.0 : 1.3,
-    children: _buildGridTileList(context));
+    children: _buildSelfieGridTileList(context));
 }
 
-class MyTile extends StatelessWidget {
+class WeekTile extends StatelessWidget {
   final String title;
   final int week;
   final String description;
 
-  MyTile({this.title, this.week, this.description}) : super(key: ObjectKey(title));
+  WeekTile({this.title, this.week, this.description}) : super(key: ObjectKey(title));
 
   showSelfies(bool opened, int week) {
     if (opened) {
@@ -82,7 +82,7 @@ class MyTile extends StatelessWidget {
         color: Colors.red[500],
       ), 
       title: Text("Week $week - $title\n$description"),
-      children: <Widget>[buildGrid(context)],
+      children: <Widget>[buildSelfieGrid(context)],
       onExpansionChanged: (bool opened) {
         showSelfies(opened, week);
       },
